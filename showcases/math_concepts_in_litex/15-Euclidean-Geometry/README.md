@@ -1,4 +1,4 @@
-# Perpendicular Bisector Theorem
+# Euclidian Geometry System
 
 This standalone analytic-geometry showcase proves the perpendicular bisector
 theorem over Cartesian points in `R²`:
