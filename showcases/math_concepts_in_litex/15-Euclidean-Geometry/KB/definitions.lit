@@ -1,29 +1,16 @@
 # ═══════════════════════════════════════════════════════════════════════
-# UNIFIED EUCLIDEAN GEOMETRY LIBRARY
+# EUCLIDEAN GEOMETRY — PRIMITIVE DEFINITIONS
 # ═══════════════════════════════════════════════════════════════════════
 #
-# 统一的欧几里得几何库，整合以下4个文件的内容：
-# - book_zero.lit (基础对象和原子谓词)
-# - definitions.lit (复合定义)
-# - analytic_laws.lit (坐标几何定理)
-# - predicate_laws.lit (谓词桥接定理)
-#
-# 创建日期: 2026-08-23
-# 版本: 0.1.0-alpha
-# 目标: 为中考题提供统一的、无命名空间冲突的定理库
+# Basic sets and helper functions used by the predicates and theorems.
+# Composite geometric relations such as is_midpoint and is_perpendicular
+# are defined in predicates.lit.
 #
 # ═══════════════════════════════════════════════════════════════════════
-
-# ═══════════════════════════════════════════════════════════════════════
-# SECTION 1: PRIMITIVES (from book_zero.lit)
-# ═══════════════════════════════════════════════════════════════════════
-# 基础几何对象：点、向量、距离、角度
-# 原子谓词：共线、垂直、平行、直角、线段全等、角度全等
 
 # ───────────────────────────────────────────────────────────────────────
-# 1.1 Points
+# 1. Points
 # ───────────────────────────────────────────────────────────────────────
-
 
 have points set = cart(R, R)
 
@@ -68,10 +55,5 @@ have fn circle(o cart(R, R), r R+) power_set(cart(R, R)) = {p cart(R, R): distan
 # 1.9 Atomic predicates
 # ───────────────────────────────────────────────────────────────────────
 
-# Collinearity: three points lie on one line
+# Collection of all lines represented as point sets.
 have lines set = {L power_set(cart(R, R)): $KB::predicates::is_line(L)}
-
-# ───────────────────────────────────────────────────────────────────────
-# 2.2 Midpoint
-# ───────────────────────────────────────────────────────────────────────
-

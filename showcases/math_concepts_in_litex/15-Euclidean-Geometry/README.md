@@ -5,14 +5,16 @@ with Problem 639, the perpendicular-bisector example.
 
 ## Structure
 
-- `KB/definitions.lit` — the complete definitions module (77 lines)
-- `KB/predicates.lit` — the complete predicates module (196 lines)
-- `KB/theorems.lit` — the complete theorems/axioms module (1917 lines)
+- `KB/definitions.lit` — primitive sets and helper functions such as vectors, dot products, squared distance, lines, and circles
+- `KB/predicates.lit` — composite geometric predicates such as midpoint, perpendicularity, parallelism, and triangle relations
+- `KB/theorems.lit` — the theorems and declared axioms used by the knowledge base
 - `problem_639/main.lit` — the original Problem 639 statement and proof
 
-The three files under `KB/` are copied unchanged from the source `Litex/KB`
-directory. `problem_639` imports this local `KB`, so the showcase does not
-depend on files outside its own directory.
+The knowledge base is kept as three separate Litex modules. In particular,
+`is_midpoint` and the other composite geometric relations belong to
+`predicates.lit`; `definitions.lit` intentionally contains only the primitive
+sets and helper functions. `problem_639` imports this local `KB`, so the
+showcase does not depend on files outside its own directory.
 
 ## Run
 
