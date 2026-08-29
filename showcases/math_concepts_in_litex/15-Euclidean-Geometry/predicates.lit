@@ -1,6 +1,0 @@
-prop is_midpoint(O, A, B cart(R, R)):
-    2 * O[1] = A[1] + B[1]
-    2 * O[2] = A[2] + B[2]
-
-prop is_perpendicular(P, O, A, B cart(R, R)):
-    definitions::perpendicular_dot(P, O, A, B) = 0

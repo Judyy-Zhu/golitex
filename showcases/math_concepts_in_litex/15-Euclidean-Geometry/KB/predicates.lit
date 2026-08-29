@@ -1,0 +1,196 @@
+# Predicates for Euclidean Geometry
+# 
+# This file contains predicate definitions (prop) for geometric relations
+# 
+# Depends on: definitions.lit
+
+prop is_on_segment(p, a, b cart(R, R)):
+    a != b
+    exist t R st {0 <= t, t <= 1, p = (a[1] + t * (b[1] - a[1]), a[2] + t * (b[2] - a[2]))}
+
+# ───────────────────────────────────────────────────────────────────────
+# 1.6 Rays (as predicate)
+# ───────────────────────────────────────────────────────────────────────
+
+prop is_on_ray(p, a, b cart(R, R)):
+    a != b
+    exist t R st {0 <= t, p = (a[1] + t * (b[1] - a[1]), a[2] + t * (b[2] - a[2]))}
+
+# ───────────────────────────────────────────────────────────────────────
+# 1.7 Angles (Undirected, represented by cosine ratio)
+# ───────────────────────────────────────────────────────────────────────
+
+# Undirected angle: ∠PQR as a value in [0, π], represented by its cosine.
+# cos(∠PQR) = KB::definitions::dot(QP, QR) / (|QP| * |QR|)
+# We store the (numerator, denominator) pair to avoid division and sqrt.
+prop is_collinear(p, q, r cart(R, R)):
+    KB::definitions::det(KB::definitions::vec(p, q), KB::definitions::vec(p, r)) = 0
+
+# Segment congruence: |AB| = |CD|
+prop are_segments_congruent(a, b, c, d cart(R, R)):
+    KB::definitions::distance_sq(a, b) = KB::definitions::distance_sq(c, d)
+
+# Angle congruence (undirected): ∠PQR ≅ ∠UVW, values in [0°, 180°]
+# For undirected angles, two angles are equal iff cos(∠PQR) = cos(∠UVW).
+# Since cos is strictly monotone on [0, π], this is equivalent to ∠PQR = ∠UVW.
+# We use cross-multiplication to avoid division:
+#   KB::definitions::dot(QP, QR) / (|QP|²·|QR|²) = KB::definitions::dot(VU, VW) / (|VU|²·|VW|²)
+#   ⟺ KB::definitions::dot(QP, QR) · |VU|²·|VW|² = KB::definitions::dot(VU, VW) · |QP|²·|QR|²
+prop are_angles_congruent(p, q, r, u, v, w cart(R, R)):
+    p != q
+    r != q
+    u != v
+    w != v
+    angle_cos_num(p, q, r) * angle_cos_den(u, v, w) = angle_cos_num(u, v, w) * angle_cos_den(p, q, r)
+
+# Right angle: ∠PQR = 90°
+prop is_right_angle(p, q, r cart(R, R)):
+    p != q
+    r != q
+    KB::definitions::dot(KB::definitions::vec(q, p), KB::definitions::vec(q, r)) = 0
+
+# Parallel: AB ∥ CD
+prop is_parallel(a, b, c, d cart(R, R)):
+    a != b
+    c != d
+    KB::definitions::det(KB::definitions::vec(a, b), KB::definitions::vec(c, d)) = 0
+
+# Perpendicular: AB ⊥ CD
+prop is_perpendicular(a, b, c, d cart(R, R)):
+    a != b
+    c != d
+    KB::definitions::dot(KB::definitions::vec(a, b), KB::definitions::vec(c, d)) = 0
+
+# ═══════════════════════════════════════════════════════════════════════
+# SECTION 2: COMPOSITE DEFINITIONS (from definitions.lit)
+# ═══════════════════════════════════════════════════════════════════════
+# 复合几何定义：中点、垂足、三角形、旋转等
+
+# ───────────────────────────────────────────────────────────────────────
+# 2.1 Line membership and classification
+# ───────────────────────────────────────────────────────────────────────
+
+prop is_line(L power_set(cart(R, R))):
+    exist a, b, c R st {a != 0 or b != 0, L = line(a, b, c)}
+
+prop is_midpoint(m, a, b cart(R, R)):
+    m = ((a[1] + b[1]) / 2, (a[2] + b[2]) / 2)
+
+# ───────────────────────────────────────────────────────────────────────
+# 2.3 Point position predicates
+# ───────────────────────────────────────────────────────────────────────
+
+prop is_on_line(p, a, b cart(R, R)):
+    a != b
+    p $in line_of(a, b)
+
+prop is_on_extension(p, a, b cart(R, R)):
+    a != b
+    p != b
+    exist t R st {t > 1, p = (a[1] + t * (b[1] - a[1]), a[2] + t * (b[2] - a[2]))}
+
+# ───────────────────────────────────────────────────────────────────────
+# 2.4 Perpendicular foot
+# ───────────────────────────────────────────────────────────────────────
+
+prop is_foot(f, p, a, b cart(R, R)):
+    a != b
+    $is_on_line(f, a, b)
+    $is_perpendicular(p, f, a, b)
+
+# ───────────────────────────────────────────────────────────────────────
+# 2.5 Angle bisector
+# ───────────────────────────────────────────────────────────────────────
+
+prop is_angle_bisector(a, b, c, d cart(R, R)):
+    b != a
+    b != c
+    d != b
+    $are_angles_congruent(a, b, d, d, b, c)
+
+# ───────────────────────────────────────────────────────────────────────
+# 2.6 Triangle types
+# ───────────────────────────────────────────────────────────────────────
+
+prop is_triangle(a, b, c cart(R, R)):
+    not $is_collinear(a, b, c)
+
+prop is_isosceles(a, b, c cart(R, R)):
+    $is_triangle(a, b, c)
+    $are_segments_congruent(a, b, a, c)
+
+prop is_equilateral(a, b, c cart(R, R)):
+    $is_triangle(a, b, c)
+    $are_segments_congruent(a, b, b, c)
+    $are_segments_congruent(a, b, a, c)
+
+prop are_triangles_congruent(p, q, r, u, v, w cart(R, R)):
+    $are_segments_congruent(p, q, u, v)
+    $are_segments_congruent(q, r, v, w)
+    $are_segments_congruent(r, p, w, u)
+
+prop are_triangles_similar(p, q, r, u, v, w cart(R, R)):
+    $are_angles_congruent(p, q, r, u, v, w)
+    $are_angles_congruent(q, r, p, v, w, u)
+    $are_angles_congruent(r, p, q, w, u, v)
+
+# ───────────────────────────────────────────────────────────────────────
+# 2.7 Quadrilaterals
+# ───────────────────────────────────────────────────────────────────────
+
+prop is_parallelogram(a, b, c, d cart(R, R)):
+    $is_parallel(a, b, d, c)
+    $is_parallel(a, d, b, c)
+
+prop is_rectangle(a, b, c, d cart(R, R)):
+    $is_parallelogram(a, b, c, d)
+    $is_right_angle(d, a, b)
+
+prop is_rhombus(a, b, c, d cart(R, R)):
+    $is_parallelogram(a, b, c, d)
+    $are_segments_congruent(a, b, b, c)
+
+prop is_square(a, b, c, d cart(R, R)):
+    $is_rectangle(a, b, c, d)
+    $are_segments_congruent(a, b, b, c)
+
+# ───────────────────────────────────────────────────────────────────────
+# 2.8 Circle predicates
+# ───────────────────────────────────────────────────────────────────────
+
+prop is_on_circle(p, o cart(R, R), r R+):
+    KB::definitions::distance_sq(p, o) = r^2
+
+prop is_diameter_endpoints(a, b, o cart(R, R)):
+    $is_midpoint(o, a, b)
+
+# ───────────────────────────────────────────────────────────────────────
+# 2.9 Rotation (90 degrees)
+# ───────────────────────────────────────────────────────────────────────
+
+prop rotated_90_cw(q, c, p cart(R, R)):
+    q[1] - c[1] = c[2] - p[2]
+    q[2] - c[2] = p[1] - c[1]
+
+prop rotated_90_ccw(q, c, p cart(R, R)):
+    q[1] - c[1] = p[2] - c[2]
+    q[2] - c[2] = c[1] - p[1]
+
+# ═══════════════════════════════════════════════════════════════════════
+# SECTION 3: ANALYTIC LAWS (from analytic_laws.lit)
+# ═══════════════════════════════════════════════════════════════════════
+# Layer -1: 代数公理
+# Layer 0: 坐标与向量运算
+# Layer 1-6: 几何定理（距离、垂直、平行、共线、角度、勾股定理等）
+
+# ═══════════════════════════════════════════════════════════════════════
+# SECTION 3: ANALYTIC LAWS (from analytic_laws.lit)
+# ═══════════════════════════════════════════════════════════════════════
+# 坐标几何定理：代数公理、距离公式、余弦定理等
+
+# Reusable coordinate and metric laws for the analytic Euclidean plane.
+
+# ═══════════════════════════════════════════════════════════════════════
+# Layer -1: Pure algebra axioms (soundness by real-number algebra)
+# ═══════════════════════════════════════════════════════════════════════
+

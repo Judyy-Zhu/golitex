@@ -1,0 +1,31 @@
+# Problem 639 v3: 垂直平分线性质证明（重做验证KB模块化）
+# 
+# 题目：直线l垂直平分线段AB，垂足为O，点P在直线l上，求证：PA=PB
+# 
+# Given: 
+#   - O 是 AB 的中点
+#   - PO ⊥ AB (即 l ⊥ AB)
+#   - P 在直线 l 上
+# 
+# Prove: PA² = PB²
+#
+# 证明思路：直接应用KB中的垂直平分线定理
+# axiom perpendicular_bisector_equidistant_sq:
+#     前提：a != b, o是a,b中点, po⊥ab
+#     结论：distance_sq(p, a) = distance_sq(p, b)
+
+thm perpendicular_bisector_property:
+    ? forall A, B, O, P cart(R, R):
+        A != B,
+        $KB::predicates::is_midpoint(O, A, B),
+        $KB::predicates::is_perpendicular(P, O, A, B)
+        =>:
+            KB::definitions::distance_sq(P, A) = KB::definitions::distance_sq(P, B)
+    
+    # 证明：直接应用谓词版垂直平分线定理
+    A != B
+    $KB::predicates::is_midpoint(O, A, B)
+    $KB::predicates::is_perpendicular(P, O, A, B)
+    
+    # 调用KB中的定理
+    by thm KB::theorems::perpendicular_bisector_equidistant_sq(A, B, O, P)
