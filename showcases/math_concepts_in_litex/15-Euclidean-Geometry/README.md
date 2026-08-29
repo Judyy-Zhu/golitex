@@ -18,7 +18,7 @@ The Litex source remains split into the requested layers:
 Run it from the repository root:
 
 ```bash
-target/release/litex -compact -runner -r showcases/math_concepts_in_litex/15_perpendicular_bisector_theorem
+target/release/litex -compact -runner -r showcases/math_concepts_in_litex/15-Euclidean-Geometry
 ```
 
 The project has no external KB import. The theorem is proved directly by
