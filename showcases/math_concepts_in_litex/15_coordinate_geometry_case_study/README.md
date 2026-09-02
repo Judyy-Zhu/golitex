@@ -11,20 +11,26 @@ Each problem is a standalone module that imports the geo library.
 
 ## Verification
 
-From the repository root, verify any problem using:
+First, build Litex from the repository root:
+
+```bash
+cargo build --release
+```
+
+Then verify any problem module:
 
 ```bash
 # Verify a single problem
-golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_639
+target/release/litex -compact -runner -r showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_639
 
 # Verify all problems
-golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_207
-golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_210
-golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_212
-golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_214
-golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_217
-golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_297
-golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_639
+target/release/litex -compact -runner -r showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_207
+target/release/litex -compact -runner -r showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_210
+target/release/litex -compact -runner -r showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_212
+target/release/litex -compact -runner -r showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_214
+target/release/litex -compact -runner -r showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_217
+target/release/litex -compact -runner -r showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_297
+target/release/litex -compact -runner -r showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_639
 ```
 
 Note: problem_217 requires ~104s due to proof complexity.
