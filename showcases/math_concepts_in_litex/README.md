@@ -1,11 +1,11 @@
 # Math Concepts in Litex
 
-This collection contains fourteen independent, executable showcases ordered as
+This collection contains fifteen independent, executable showcases ordered as
 a reader path from school mathematics to early undergraduate numerical work.
 The numeric prefixes are editorial order only: the projects do not import one
 another.
 
-Every directory publishes the same five artifacts:
+Most directories publish the same five artifacts:
 
 - `main.lit`: a checked, setting-first mathematical spine;
 - `litex.config`: the standalone module entry;
@@ -29,6 +29,7 @@ Every directory publishes the same five artifacts:
 | 12 | `12_ordinary_differential_equations_in_nutshell` | quadratic family and the IVP `y' = 2x, y(0)=1` |
 | 13 | `13_numerical_analysis_in_nutshell` | Newton iteration with a proved gap bound |
 | 14 | `14_tarski_geometry_from_axioms` | GeoCoq-aligned SST Chapters 2–11, Euclid I.5, and exact angle-based SAS |
+| 15 | `15_coordinate_geometry_case_study` | Collection of 7 verified coordinate geometry problems with shared library |
 
 Run any project from the repository root:
 
