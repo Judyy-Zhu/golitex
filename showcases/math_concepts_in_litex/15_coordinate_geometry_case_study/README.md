@@ -11,12 +11,23 @@ Each problem is a standalone module that imports the geo library.
 
 ## Verification
 
-To verify a problem:
+From the repository root, verify any problem using:
+
 ```bash
-litex -compact -runner -r problem_639/ -e solution
+# Verify a single problem
+golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_639
+
+# Verify all problems
+golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_207
+golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_210
+golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_212
+golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_214
+golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_217
+golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_297
+golitex verify showcases/math_concepts_in_litex/15_coordinate_geometry_case_study/problem_639
 ```
 
-Note: problem_217 requires 180s timeout due to proof complexity.
+Note: problem_217 requires ~104s due to proof complexity.
 
 ## Problems Included
 
